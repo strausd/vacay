@@ -1,0 +1,18 @@
+# Use docker syntax version 3
+version: '3'
+
+# Each service is a new container
+services:
+  web:
+    # Build from current container
+    build: .
+    # Run command to start the node server
+    command: yarn run start
+    # Map a volume from our local machine to our container
+    # Gives real time access of our code in our container
+    volumes:
+      - .:/code
+    # Expose port 8000 outside container
+    # HOST:CONTAINER
+    ports:
+      - "8000:8000"
