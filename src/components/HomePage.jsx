@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
 
-import CounterController from './CounterController';
-
 
 export class HomePage extends React.Component {
     constructor(props) {
@@ -12,18 +10,10 @@ export class HomePage extends React.Component {
     render() {
         return (
             <div>
-                <h1>Home Page</h1>
-                <p>counter: {this.props.counter}</p>
-                <CounterController />
+                <h1>Vacay</h1>
             </div>
         );
     }
 };
 
-const mapStateToProps = (state) => {
-    return {
-        counter: state
-    };
-};
-
-export default connect(mapStateToProps)(HomePage);
+export default HomePage;

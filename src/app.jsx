@@ -7,9 +7,6 @@ import App from './components/App';
 
 import './styles/styles.scss';
 
-// TODO
-// Cleanup for solid boilerplate
-
 const store = configureStore();
 
 const jsx = (
