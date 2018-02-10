@@ -4,17 +4,16 @@ const UserModel = require('../../db/schemas/user');
 
 const appRouter = (app) => {
     app.post('/adduser/', (req, res) => {
-
         const data = {
-            first_name: 'Afton',
-            last_name: 'Straus',
-            age: 26,
-            location: 'Texas'
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            email: req.body.email,
+            password: req.body.password
         };
         const newUserPromise = UserModel.create(data);
         newUserPromise.then((newUser) => {
             return res.status(200).send(newUser);
-        }).catch(err => res.status(400).send({ err: err }));
+        }).catch(error => res.status(200).send({ error }));
     });
 
     app.post('/adduser/:num/', (req, res) => {
@@ -22,8 +21,8 @@ const appRouter = (app) => {
         const data = {
             first_name: 'Afton',
             last_name: 'Straus',
-            age: 26,
-            location: 'Texas'
+            email: 'email@email.com',
+            password: 'Texas1'
         };
         const num = Number(req.params.num);
         let num_created = 0;

@@ -4,6 +4,7 @@ const app = express();
 const DotEnv = require('dotenv');
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const api_routes = require('./routes/api');
 
@@ -15,6 +16,10 @@ if (process.env.NODE_ENV == 'production') {
     DotEnv.config({ path: '.env.prod' });
 } else {
     DotEnv.config({ path: '.env.dev' });
+    // Setup cors to allow webpack dev-server to connect
+    app.use(cors({
+        origin: 'http://localhost:8000'
+    }));
 }
 
 // Body parser setup - tells it to accept JSON and url encoded values
