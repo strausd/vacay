@@ -1,8 +1,15 @@
+const csrf = require('csurf');
 const mongoose = require('mongoose');
 const UserModel = require('../../db/schemas/user');
 
+const csrfProtection = csrf({ cookie: true });
+
 
 const appRouter = (app) => {
+    app.get('/getcsrf/', csrfProtection, (req, res) => {
+        return res.status(200).send({ csrfToken: req.csrfToken() })
+    });
+
     app.post('/adduser/', (req, res) => {
         const data = {
             first_name: req.body.first_name,
@@ -40,7 +47,7 @@ const appRouter = (app) => {
         }
     });
 
-    app.post('/getusers/', (req, res) => {
+    app.post('/getusers/', csrfProtection, (req, res) => {
         UserModel.find().then((users) => {
             return res.status(200).send({users});
         }).catch(err => res.status(400).send({ err: err }));

@@ -29,6 +29,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Tell express where our static files are
 app.use(express.static(publicPath));
 
+// Setup csrf
+const cookieParser = require('cookie-parser');
+const csrf = require('csurf');
+const csrfProtection = csrf({ cookie: true });
+app.use(cookieParser());
+
 // Connect to our database
 const mongo_connect = mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}`);
 mongo_connect.then(() => console.log('Connected to mongoDB successfully')).catch(e => {
