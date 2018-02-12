@@ -10,7 +10,7 @@ const appRouter = (app) => {
         return res.status(200).send({ csrfToken: req.csrfToken() })
     });
 
-    app.post('/adduser/', (req, res) => {
+    app.post('/adduser/', csrfProtection, (req, res) => {
         const data = {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
@@ -23,12 +23,12 @@ const appRouter = (app) => {
         }).catch(error => res.status(200).send({ error }));
     });
 
-    app.post('/adduser/:num/', (req, res) => {
+    app.post('/adduser/:num/', csrfProtection, (req, res) => {
 
         const data = {
             first_name: 'Afton',
             last_name: 'Straus',
-            email: 'email@email.com',
+            email: 'email1@email.com',
             password: 'Texas1'
         };
         const num = Number(req.params.num);
@@ -53,14 +53,14 @@ const appRouter = (app) => {
         }).catch(err => res.status(400).send({ err: err }));
     });
 
-    app.post('/deleteusers/', (req, res) => {
+    app.post('/deleteusers/', csrfProtection, (req, res) => {
         UserModel.remove().then((users) => {
             return res.status(200).send({ users });
         }).catch(err => res.status(400).send({ err: err }));
     });
 
     // For each user, I want to change the age to +1
-    app.post('/updateuser/', (req, res) => {
+    app.post('/updateuser/', csrfProtection, (req, res) => {
         const users = UserModel.find({ age: { $ne: null } }).then((users) => {
             return users;
         }).then((users) => {
