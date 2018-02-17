@@ -21,6 +21,7 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: true,
+        uniqueCaseInsensitive: true,
         trim: true,
         validate: {
             validator: v => /\S+@\S+\.\S{2,}/.test(v),
@@ -38,7 +39,9 @@ const UserSchema = new Schema({
     id: ObjectId
 });
 
-UserSchema.plugin(uniqueValidator);
+UserSchema.plugin(uniqueValidator, {
+    message: 'Error: the {PATH} {VALUE} is already in use.'
+});
 
 UserSchema.pre('save', function(next) {
     const user = this;
@@ -64,7 +67,9 @@ UserSchema.statics.authenticate = function(email, password, callback) {
         }
         bcrypt.compare(password, user.password).then(result => {
             if (!result) {
-                return callback('Incorrect email/password combination.');
+                const err = new Error('Incorrect email/password combination.');
+                err.status = 401;
+                return callback(err);
             }
             return callback(null, user);
         }).catch(e => console.log(e))

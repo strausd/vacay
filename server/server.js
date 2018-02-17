@@ -40,7 +40,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Setup express sessions
 app.use(session({
-    secret: 'test123',
+    secret: process.env.SECRET,
     resave: true,
     saveUninitialized: true,
     secure: false,
@@ -52,18 +52,32 @@ app.use(session({
         mongooseConnection: mongoose.connection
     })
 }));
-app.use(cookieParser('test123'));
+app.use(cookieParser(process.env.SECRET));
 
 // Tell express where our static files are
 app.use(express.static(publicPath));
 
-// Use our API routes
+// Use our router
 router(app);
 
 // Always send index.html regardless of the url
 app.get('*', (req, res) => {
     res.sendFile(path.join(publicPath, 'index.html'));
 });
+
+const handleError = (err, req, res, next) => {
+    const output = {
+        error: {
+            name: err.name,
+            message: err.message,
+            text: err.toString()
+        }
+    };
+    const statusCode = err.status || 500;
+    return res.status(statusCode).send(output);
+};
+
+app.use(handleError);
 
 // Start the server
 app.listen(port, () => {

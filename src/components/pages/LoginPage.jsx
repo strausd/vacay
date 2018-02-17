@@ -12,7 +12,7 @@ export class LoginPage extends React.Component {
         };
         axios({
             method: 'post',
-            url: process.env.URL + 'login',
+            url: process.env.URL + 'api/auth/login',
             data: userData
         }).then(response => {
             if (response.data.hasOwnProperty('error')) {
@@ -20,29 +20,11 @@ export class LoginPage extends React.Component {
             } else {
                 console.log(response.data);
             }
-        }).catch(e => {
-            this.displayErrorMessage(this.refs.error_container, 'The server encountered an error. Please refresh the page and try again.');
+        }).catch((e, res) => {
+            console.log(e.response.status);
+            console.log(e.response.data.error.message);
         });
     }
-
-    handleLogout = () => {
-        axios({
-            method: 'post',
-            url: process.env.URL + 'logout',
-        }).then(response => {
-            if (response.data.hasOwnProperty('error')) {
-                console.log(response.data.error);
-            } else {
-                console.log(response.data);
-            }
-        }).catch(e => {
-            this.displayErrorMessage(this.refs.error_container, 'The server encountered an error. Please refresh the page and try again.');
-        });;
-    };
-
-    handleCheckId = () => {
-        axios.get(process.env.URL + 'checkid');
-    };
 
     render() {
         return (
@@ -51,18 +33,16 @@ export class LoginPage extends React.Component {
                 <form onSubmit={this.handleLoginSubmit}>
                     <div>
                         <label htmlFor="email">Email</label>
-                        <input type="email" id="email" name="email" ref="email" placeholder="email" />
+                        <input type="email" id="email" name="email" ref="email" placeholder="email" required />
                     </div>
                     <div>
                         <label htmlFor="password">Password</label>
-                        <input type="password" id="password" name="password" ref="password" placeholder="password" minLength="6" />
+                        <input type="password" id="password" name="password" ref="password" placeholder="password" minLength="6" required />
                     </div>
                     <div>
                         <input type="submit" value="Login" />
                     </div>
                 </form>
-                <button onClick={this.handleLogout}>Logout</button>
-                <button onClick={this.handleCheckId}>Check ID</button>
             </div>
         );
     }

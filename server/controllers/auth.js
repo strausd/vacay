@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const UserModel = require('../../db/schemas/user');
-const config = require('../config/main');
 
 
 const setUserInfo = user => {
@@ -14,19 +13,21 @@ const setUserInfo = user => {
 };
 
 const generateToken = user => {
-    return jwt.sign(user, config.secret, {
+    return jwt.sign(user, String(process.env.SECRET), {
         expiresIn: 10080
     });
 };
+
 
 //========================================
 // Login Route
 //========================================
 exports.login = (req, res, next) => {
     const userInfo = setUserInfo(req.user);
+    const token = 'JWT ' + generateToken(userInfo)
 
-    res.status(200).json({
-        token: 'JWT ' + generateToken(userInfo),
+    res.status(200).send({
+        token: token,
         user: userInfo
     });
 }
@@ -55,26 +56,18 @@ exports.register = function (req, res, next) {
     if (!password) {
         return res.status(422).send({ error: 'You must enter a password.' });
     }
-
-    UserModel.findOne({ email }, (err, existingUser) => {
-        if (err) { return next(err); }
-
-        // If user is not unique, return error
-        if (existingUser) {
-            return res.status(422).send({ error: 'That email address is already in use.' });
-        }
-        const newUserPromise = UserModel.create({
-            email,
-            password,
-            first_name,
-            last_name
+    const userData = {
+        email,
+        password,
+        first_name,
+        last_name
+    };
+    const newUserPromise = UserModel.create(userData);
+    newUserPromise.then((newUser) => {
+        const userInfo = setUserInfo(newUser);
+        return res.status(201).send({
+            token: 'JWT ' + generateToken(userInfo),
+            user: userInfo
         });
-        newUserPromise.then((newUser) => {
-            const userInfo = setUserInfo(newUser);
-            res.status(201).json({
-                token: 'JWT ' + generateToken(userInfo),
-                user: userInfo
-            });
-        }).catch(error => next(error));
-    });
+    }).catch(error => res.status(422).send(error));
 }

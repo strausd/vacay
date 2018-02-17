@@ -19,7 +19,7 @@ export class SignupPage extends React.Component {
         };
         axios({
             method: 'post',
-            url: process.env.URL + 'adduser',
+            url: process.env.URL + 'api/auth/register',
             data: userData
         }).then(response => {
             if (response.data.hasOwnProperty('error')) {
@@ -27,14 +27,15 @@ export class SignupPage extends React.Component {
             } else {
                 console.log(response.data);
             }
-        }).catch(e => {
-            this.displayErrorMessage(this.refs.error_container, 'The server encountered an error. Please refresh the page and try again.');
+        }).catch((e, res) => {
+            console.log(e.response.status);
+            const errors = e.response.data.errors;
+            for (let field in errors) {
+                if (errors.hasOwnProperty(field)) {
+                    console.log(errors[field].path, errors[field].message);
+                }
+            }
         });
-    }
-
-    displayErrorMessage = (msg_node, msg) => {
-        msg_node.innerHTML = msg;
-        msg_node.classList.remove('hidden');
     }
 
     render = () => {
@@ -73,10 +74,4 @@ export class SignupPage extends React.Component {
     }
 };
 
-const mapStateToProps = (state) => {
-    return {
-        csrf: state.auth.csrf
-    };
-}
-
-export default connect(mapStateToProps)(SignupPage);
+export default SignupPage;

@@ -4,8 +4,8 @@ const passportService = require('../config/passport');
 const AuthController = require('../controllers/auth');
 
 
-const requireAuth = passport.authenticate('jwt', { session: false });
-const requireLogin = passport.authenticate('local', { session: false });
+const requireAuth = passport.authenticate('jwt', { session: false, failWithError: true });
+const requireLogin = passport.authenticate('local', { session: false, failWithError: true });
 
 module.exports = app => {
     const apiRoutes = express.Router();
@@ -13,8 +13,7 @@ module.exports = app => {
 
     apiRoutes.use('/auth', authRoutes);
 
-    authRoutes.post('/register/', AuthController.register);
-
+    authRoutes.post('/register', AuthController.register);
     authRoutes.post('/login', requireLogin, AuthController.login);
 
     app.use('/api', apiRoutes);
