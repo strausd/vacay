@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
 
@@ -16,7 +17,11 @@ export class SignupPage extends React.Component {
             email: this.refs.email.value,
             password: this.refs.password.value
         };
-        axios.post(process.env.URL + 'adduser', userData).then(response => {
+        axios({
+            method: 'post',
+            url: process.env.URL + 'adduser',
+            data: userData
+        }).then(response => {
             if (response.data.hasOwnProperty('error')) {
                 console.log(response.data.error);
             } else {
@@ -68,4 +73,10 @@ export class SignupPage extends React.Component {
     }
 };
 
-export default SignupPage;
+const mapStateToProps = (state) => {
+    return {
+        csrf: state.auth.csrf
+    };
+}
+
+export default connect(mapStateToProps)(SignupPage);

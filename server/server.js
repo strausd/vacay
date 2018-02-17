@@ -5,6 +5,10 @@ const DotEnv = require('dotenv');
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const cors = require('cors');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const cookieParser = require('cookie-parser');
+const router = require('./routes/router')
 
 const api_routes = require('./routes/api');
 
@@ -22,28 +26,39 @@ if (process.env.NODE_ENV == 'production') {
     }));
 }
 
-// Body parser setup - tells it to accept JSON and url encoded values
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Tell express where our static files are
-app.use(express.static(publicPath));
-
-// Setup csrf
-const cookieParser = require('cookie-parser');
-const csrf = require('csurf');
-const csrfProtection = csrf({ cookie: true });
-app.use(cookieParser());
-
 // Connect to our database
-const mongo_connect = mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}`);
+const mongo_url = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}`
+const mongo_connect = mongoose.connect(mongo_url);
 mongo_connect.then(() => console.log('Connected to mongoDB successfully')).catch(e => {
     console.log('Error connecting to mongo');
     console.log(e);
 });
 
+// Body parser setup - tells it to accept JSON and url encoded values
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Setup express sessions
+app.use(session({
+    secret: 'test123',
+    resave: true,
+    saveUninitialized: true,
+    secure: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24,
+        secure: false,
+    },
+    store: new MongoStore({
+        mongooseConnection: mongoose.connection
+    })
+}));
+app.use(cookieParser('test123'));
+
+// Tell express where our static files are
+app.use(express.static(publicPath));
+
 // Use our API routes
-api_routes(app);
+router(app);
 
 // Always send index.html regardless of the url
 app.get('*', (req, res) => {
