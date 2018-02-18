@@ -1,8 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { verifyLocalJWT } from '../actions/authActions';
+
 
 class UserMenu extends React.Component {
+
+    componentWillMount() {
+        this.props.verifyLocalJWT();
+    }
 
     render() {
         if (this.props.user) {
@@ -27,10 +33,10 @@ const mapStateToProps = state => {
     };
 };
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         loadUserData
-//     };
-// };
+const mapDispatchToProps = dispatch => {
+    return {
+        verifyLocalJWT: () => dispatch(verifyLocalJWT())
+    };
+};
 
-export default connect(mapStateToProps)(UserMenu);
+export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);

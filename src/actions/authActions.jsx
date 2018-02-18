@@ -11,10 +11,39 @@ export const login = ({ jwt, user }) => {
     };
 };
 
-export const logout = ({ jwt, user }) => {
+export const logout = () => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('user');
     return {
         type: 'LOGOUT'
     };
+};
+
+export const verifyLocalJWT = () => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+        return dispatch => {
+            axios({
+                method: 'get',
+                url: process.env.URL + 'api/auth/verify',
+                headers: { Authorization: jwt }
+            }).then(response => {
+                if (response.data.hasOwnProperty('error')) {
+                    console.log(response.data.error);
+                    dispatch(logout());
+                } else {
+                    dispatch(login({
+                        jwt,
+                        user: response.data.user
+                    }));
+                }
+            }).catch((e, res) => {
+                console.log(e.response.status);
+                console.log(e.response.data.error.message);
+                dispatch(logout());
+            });
+        };
+    } else {
+        return logout();
+    }
 };

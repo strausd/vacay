@@ -33,7 +33,8 @@ exports.login = (req, res, next) => {
 
 exports.verify = (req, res, next) => {
     res.status(200).send({
-        success: true
+        success: true,
+        user: req.user
     });
 }
 
