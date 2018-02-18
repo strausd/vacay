@@ -14,7 +14,7 @@ const setUserInfo = user => {
 
 const generateToken = user => {
     return jwt.sign(user, String(process.env.SECRET), {
-        expiresIn: 10080
+        expiresIn: 86400
     });
 };
 
@@ -29,6 +29,12 @@ exports.login = (req, res, next) => {
     res.status(200).send({
         token: token,
         user: userInfo
+    });
+}
+
+exports.verify = (req, res, next) => {
+    res.status(200).send({
+        success: true
     });
 }
 

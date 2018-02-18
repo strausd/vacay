@@ -1,5 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+
+import { login } from '../../actions/authActions'
 
 
 export class LoginPage extends React.Component {
@@ -18,7 +21,10 @@ export class LoginPage extends React.Component {
             if (response.data.hasOwnProperty('error')) {
                 console.log(response.data.error);
             } else {
-                console.log(response.data);
+                this.props.login({
+                    jwt: response.data.token,
+                    user: response.data.user
+                });
             }
         }).catch((e, res) => {
             console.log(e.response.status);
@@ -48,4 +54,10 @@ export class LoginPage extends React.Component {
     }
 };
 
-export default LoginPage;
+const mapDispatchToProps = dispatch => {
+    return {
+        login: data => dispatch(login(data))
+    };
+};
+
+export default connect(null, mapDispatchToProps)(LoginPage);

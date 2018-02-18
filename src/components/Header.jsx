@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
+import UserMenu from './UserMenu';
+
 
 const Header = () => {
     return (
@@ -12,6 +14,7 @@ const Header = () => {
                 <li><NavLink exact to="/signup" activeClassName="active">Signup</NavLink></li>
                 <li><NavLink exact to="/login" activeClassName="active">Login</NavLink></li>
             </ul>
+            <UserMenu />
         </div>
     );
 };
