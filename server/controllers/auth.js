@@ -13,11 +13,10 @@ const setUserInfo = user => {
 };
 
 const generateToken = user => {
-    return jwt.sign(user, String(process.env.SECRET), {
+    return jwt.sign(user, process.env.SECRET, {
         expiresIn: 86400
     });
 };
-
 
 //========================================
 // Login Route

@@ -7,7 +7,7 @@ const jwtStrategy = jwt.Strategy;
 const extractJwt = jwt.ExtractJwt;
 const localOptions = { usernameField: 'email' };
 
-const localLogin = new localStrategy(localOptions, (email, password, done, ) => {
+const localLogin = new localStrategy(localOptions, (email, password, done) => {
     UserModel.authenticate(email, password, (err, user) => {
         if (err) return done(err);
         if (user) return done(null, user);
@@ -18,7 +18,7 @@ const jwtOptions = {
     // Telling Passport to check authorization headers for JWT
     jwtFromRequest: extractJwt.fromAuthHeaderWithScheme('jwt'),
     // Telling Passport where to find the secret
-    secretOrKey: String(process.env.SECRET)
+    secretOrKey: process.env.SECRET
 };
 
 // Setting up JWT login strategy

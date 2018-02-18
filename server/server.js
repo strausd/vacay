@@ -2,18 +2,7 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const DotEnv = require('dotenv');
-const bodyParser = require("body-parser");
-const mongoose = require('mongoose');
 const cors = require('cors');
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
-const cookieParser = require('cookie-parser');
-const router = require('./routes/router')
-
-const api_routes = require('./routes/api');
-
-const publicPath = path.join(__dirname, '..', 'public');
-const port = process.env.PORT || 3000;
 
 // Environment variable setup
 if (process.env.NODE_ENV == 'production') {
@@ -25,6 +14,19 @@ if (process.env.NODE_ENV == 'production') {
         origin: 'http://localhost:8000'
     }));
 }
+
+const bodyParser = require("body-parser");
+const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const cookieParser = require('cookie-parser');
+const router = require('./routes/router')
+
+const api_routes = require('./routes/api');
+
+const publicPath = path.join(__dirname, '..', 'public');
+const port = process.env.PORT || 3000;
+
 
 // Connect to our database
 const mongo_url = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}`
