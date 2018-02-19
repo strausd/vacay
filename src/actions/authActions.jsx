@@ -19,6 +19,12 @@ export const logout = () => {
     };
 };
 
+export const loadLocalJWT = () => {
+    const jwt = localStorage.getItem('jwt');
+    const user = JSON.parse(localStorage.getItem('user'));
+    return login({ jwt, user });
+};
+
 export const verifyLocalJWT = () => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {

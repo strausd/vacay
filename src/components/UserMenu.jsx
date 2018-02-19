@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { verifyLocalJWT } from '../actions/authActions';
+import { loadLocalJWT, verifyLocalJWT } from '../actions/authActions';
 
 
 class UserMenu extends React.Component {
 
     componentWillMount() {
+        this.props.loadLocalJWT();
         this.props.verifyLocalJWT();
     }
 
@@ -35,6 +36,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        loadLocalJWT: () => dispatch(loadLocalJWT()),
         verifyLocalJWT: () => dispatch(verifyLocalJWT())
     };
 };

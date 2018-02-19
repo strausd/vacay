@@ -13,6 +13,7 @@ const Header = () => {
                 <li><NavLink exact to="/contact" activeClassName="active">Contact</NavLink></li>
                 <li><NavLink exact to="/signup" activeClassName="active">Signup</NavLink></li>
                 <li><NavLink exact to="/login" activeClassName="active">Login</NavLink></li>
+                <li><NavLink exact to="/dashboard" activeClassName="active">Dashboard</NavLink></li>
             </ul>
             <UserMenu />
         </div>
