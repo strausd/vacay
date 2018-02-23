@@ -4809,6 +4809,10 @@ node-sass@^4.7.2:
     stdout-stream "^1.4.0"
     "true-case-path" "^1.0.2"
 
+nodemailer@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-4.5.0.tgz#f041b5d545671f97a12e973a8fc48a3113122a5f"
+
 nodemon@^1.14.12:
   version "1.14.12"
   resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.14.12.tgz#fe059424b15ebdb107696287a558d9cf53a63999"

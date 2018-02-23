@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const UserModel = require('../../db/schemas/user');
+const sendEmail = require('../config/nodemailer');
 
 
 const setUserInfo = user => {
@@ -35,6 +36,27 @@ exports.verify = (req, res, next) => {
     res.status(200).send({
         success: true,
         user: req.user
+    });
+}
+
+exports.sendEmail = (req, res, next) => {
+    mailOptions = {
+        toAddress: req.body.toAddress,
+        replyTo: req.body.replyTo || null,
+        subject: req.body.subject,
+        html: req.body.html
+    };
+    console.log(mailOptions);
+    sendEmail(mailOptions).then(info => {
+        console.log(info);
+        res.status(200).send({
+            success: true
+        });
+    }).catch(err => {
+        console.log(err);
+        res.status(200).send({
+            success: false
+        });
     });
 }
 
