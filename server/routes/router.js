@@ -17,6 +17,7 @@ module.exports = app => {
     authRoutes.post('/login', requireLogin, AuthController.login);
     authRoutes.get('/verify', requireAuth, AuthController.verify);
     authRoutes.post('/sendEmail', AuthController.sendEmail);
+    authRoutes.post('/changepassword', requireAuth, AuthController.changePassword);
 
     app.use('/api', apiRoutes);
 };

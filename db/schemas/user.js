@@ -1,9 +1,23 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcrypt');
+const uuidv4 = require('uuid/v4');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
+
+const userNotFoundError = () => {
+    const err = new Error('User not found.');
+    err.status = 401;
+    return err;
+};
+
+
+const incorrectComboError = () => {
+    const err = new Error('Incorrect email/password combination.');
+    err.status = 401;
+    return err;
+};
 
 const UserSchema = new Schema({
     first_name: {
@@ -16,7 +30,6 @@ const UserSchema = new Schema({
         required: true,
         trim: true,
     },
-    age: String,
     email: {
         type: String,
         required: true,
@@ -36,7 +49,8 @@ const UserSchema = new Schema({
             message: 'Password must be at least 6 characters.'
         }
     },
-    id: ObjectId
+    forgot_password_token: String,
+    forgot_password_expires: Date
 });
 
 UserSchema.plugin(uniqueValidator, {
@@ -56,25 +70,53 @@ UserSchema.pre('save', function(next) {
             next();
         });
     });
-})
+});
 
 UserSchema.statics.authenticate = function(email, password, callback) {
     this.findOne({ email }).then(user => {
         if (!user) {
-            const err = new Error('User not found.');
-            err.status = 401;
-            return callback(err);
+            return callback(userNotFoundError());
         }
         bcrypt.compare(password, user.password).then(result => {
             if (!result) {
-                const err = new Error('Incorrect email/password combination.');
-                err.status = 401;
-                return callback(err);
+                return callback(incorrectComboError());
             }
             return callback(null, user);
         }).catch(e => console.log(e))
     }).catch(err => callback(err));
-}
+};
+
+UserSchema.statics.change_password = function(email, old_password, new_password, callback) {
+    this.findOne({ email }).then(user => {
+        if (!user) {
+            return callback(userNotFoundError());
+        }
+        bcrypt.compare(old_password, user.password).then(result => {
+            if (!result) {
+                return callback(incorrectComboError());
+            }
+            user.password = new_password;
+            user.save().then(user => {
+                return callback(null, user);
+            });
+        }).catch(e => console.log(e))
+    }).catch(err => callback(err));
+};
+
+// UserSchema.statics.forgot_password = function(email, callback) {
+//     this.findOne({ email }).then(user => {
+//         if (!user) {
+//             return callback(userNotFoundError());
+//         }
+//         const expires_date = new Date();
+//         expires_date.setHours(expires_date.getHours() + 1);
+//         user.forgot_password_token = uuidv4();
+//         user.forgot_password_expires = expires_date;
+//         user.save().then(user => {
+//             return callback(null, user);
+//         }).catch(err => callback(err));
+//     }).catch(err => callback(err));
+// };
 
 const User = mongoose.model('User', UserSchema);
 

@@ -60,6 +60,20 @@ exports.sendEmail = (req, res, next) => {
     });
 }
 
+exports.changePassword = (req, res, next) => {
+    UserModel.change_password(req.user.email, req.body.old_password, req.body.new_password, (err, user) => {
+        if (err) {
+            return res.status(400).send({
+                success: false,
+                error: err
+            });
+        }
+        return res.status(200).send({
+            success: true
+        });
+    });
+};
+
 //========================================
 // Registration Route
 //========================================
