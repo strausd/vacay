@@ -74,6 +74,36 @@ exports.changePassword = (req, res, next) => {
     });
 };
 
+exports.forgotPasswordStart = (req, res, next) => {
+    UserModel.forgot_password_start(req.body.email, (err, user) => {
+        if (err) {
+            return res.status(400).send({
+                success: false,
+                error: err
+            });
+        }
+        return res.status(200).send({
+            success: true,
+            user
+        });
+    });
+};
+
+exports.resetPassword = (req, res, next) => {
+    UserModel.reset_password(req.body.email, req.body.password, req.body.token, (err, user) => {
+        if (err) {
+            return res.status(400).send({
+                success: false,
+                error: err
+            });
+        }
+        return res.status(200).send({
+            success: true,
+            user
+        });
+    });
+};
+
 //========================================
 // Registration Route
 //========================================

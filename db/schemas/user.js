@@ -103,20 +103,40 @@ UserSchema.statics.change_password = function(email, old_password, new_password,
     }).catch(err => callback(err));
 };
 
-// UserSchema.statics.forgot_password = function(email, callback) {
-//     this.findOne({ email }).then(user => {
-//         if (!user) {
-//             return callback(userNotFoundError());
-//         }
-//         const expires_date = new Date();
-//         expires_date.setHours(expires_date.getHours() + 1);
-//         user.forgot_password_token = uuidv4();
-//         user.forgot_password_expires = expires_date;
-//         user.save().then(user => {
-//             return callback(null, user);
-//         }).catch(err => callback(err));
-//     }).catch(err => callback(err));
-// };
+UserSchema.statics.forgot_password_start = function(email, callback) {
+    this.findOne({ email }).then(user => {
+        if (!user) {
+            return callback(userNotFoundError());
+        }
+        const expires_date = new Date();
+        expires_date.setHours(expires_date.getHours() + 1);
+        user.forgot_password_token = uuidv4();
+        user.forgot_password_expires = expires_date;
+        user.save().then(user => {
+            return callback(null, user);
+        }).catch(err => callback(err));
+    }).catch(err => callback(err));
+};
+
+UserSchema.statics.reset_password = function (email, new_password, token, callback) {
+    this.findOne({ email, forgot_password_token: token }).then(user => {
+        const now = new Date();
+        if (!user) {
+            return callback(userNotFoundError());
+        }
+        if (user.forgot_password_expires && now > user.forgot_password_expires) {
+            const err = new Error('Invalid password reset token.');
+            err.status = 401;
+            return callback(err);
+        }
+        user.password = new_password;
+        user.forgot_password_token = null;
+        user.forgot_password_expires = null;
+        user.save().then(user => {
+            return callback(null, user);
+        }).catch(err => callback(err));
+    }).catch(err => callback(err));
+};
 
 const User = mongoose.model('User', UserSchema);
 

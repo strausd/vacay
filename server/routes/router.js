@@ -18,6 +18,8 @@ module.exports = app => {
     authRoutes.get('/verify', requireAuth, AuthController.verify);
     authRoutes.post('/sendEmail', AuthController.sendEmail);
     authRoutes.post('/changepassword', requireAuth, AuthController.changePassword);
+    authRoutes.post('/forgotpassword', AuthController.forgotPasswordStart);
+    authRoutes.post('/resetpassword', AuthController.resetPassword);
 
     app.use('/api', apiRoutes);
 };
