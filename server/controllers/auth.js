@@ -79,13 +79,33 @@ exports.forgotPasswordStart = (req, res, next) => {
         if (err) {
             return res.status(400).send({
                 success: false,
-                error: err
+                error: {
+                    message: err.message,
+                    status: err.status
+                }
             });
         }
-        return res.status(200).send({
-            success: true,
-            user
+        const fullUrl = req.protocol + '://' + req.get('host');
+        mailOptions = {
+            toAddress: user.email,
+            subject: 'Password Reset',
+            html: `The following link can be used to reset your password. Note, the link will expire in 1 hour. ${fullUrl}/resetpassword/${user.forgot_password_token}`
+        };
+        sendEmail(mailOptions).then(info => {
+            console.log(info);
+            return res.status(200).send({
+                success: true,
+            });
+        }).catch(err => {
+            return res.status(400).send({
+                success: false,
+                error: {
+                    message: err.message,
+                    status: err.status
+                }
+            });
         });
+        
     });
 };
 

@@ -27,7 +27,7 @@ export const loadLocalJWT = () => {
 
 export const verifyLocalJWT = () => {
     const jwt = localStorage.getItem('jwt');
-    if (jwt) {
+    if (jwt === null) {
         return dispatch => {
             axios({
                 method: 'get',

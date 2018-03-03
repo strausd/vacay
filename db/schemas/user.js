@@ -59,6 +59,7 @@ UserSchema.plugin(uniqueValidator, {
 
 UserSchema.pre('save', function(next) {
     const user = this;
+    user.email = user.email.toLowerCase();
     const SALT_FACTOR = 10;
     if (!user.isModified('password')) return next();
     bcrypt.genSalt(SALT_FACTOR, (err, salt) => {
@@ -73,7 +74,7 @@ UserSchema.pre('save', function(next) {
 });
 
 UserSchema.statics.authenticate = function(email, password, callback) {
-    this.findOne({ email }).then(user => {
+    this.findOne({ email: email.toLowerCase() }).then(user => {
         if (!user) {
             return callback(userNotFoundError());
         }
@@ -87,7 +88,7 @@ UserSchema.statics.authenticate = function(email, password, callback) {
 };
 
 UserSchema.statics.change_password = function(email, old_password, new_password, callback) {
-    this.findOne({ email }).then(user => {
+    this.findOne({ email: email.toLowerCase() }).then(user => {
         if (!user) {
             return callback(userNotFoundError());
         }
@@ -104,7 +105,7 @@ UserSchema.statics.change_password = function(email, old_password, new_password,
 };
 
 UserSchema.statics.forgot_password_start = function(email, callback) {
-    this.findOne({ email }).then(user => {
+    this.findOne({ email: email.toLowerCase() }).then(user => {
         if (!user) {
             return callback(userNotFoundError());
         }
@@ -119,7 +120,7 @@ UserSchema.statics.forgot_password_start = function(email, callback) {
 };
 
 UserSchema.statics.reset_password = function (email, new_password, token, callback) {
-    this.findOne({ email, forgot_password_token: token }).then(user => {
+    this.findOne({ email: email.toLowerCase(), forgot_password_token: token }).then(user => {
         const now = new Date();
         if (!user) {
             return callback(userNotFoundError());

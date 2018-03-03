@@ -1,31 +1,29 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { connect } from 'react-redux';
-
-import { login } from '../../actions/authActions'
 
 
-export class LoginPage extends React.Component {
+export class ResetPasswordPage extends React.Component {
 
-    handleLoginSubmit = (e) => {
+    handleForgotSubmit = (e) => {
         e.preventDefault();
-        const userData = {
+        // If passwords dont match, return an error
+        if (this.refs.password.value !== this.refs.password_confirm.value) {
+            return console.log('Passwords do not match.');
+        }
+        const data = {
             email: this.refs.email.value,
-            password: this.refs.password.value
+            password: this.refs.password.value,
+            token: this.props.match.params.uuid
         };
         axios({
             method: 'post',
-            url: process.env.URL + 'api/auth/login',
-            data: userData
+            url: process.env.URL + 'api/auth/resetpassword',
+            data
         }).then(response => {
             if (response.data.hasOwnProperty('error')) {
                 console.log(response.data.error);
             } else {
-                this.props.login({
-                    jwt: response.data.token,
-                    user: response.data.user
-                });
+                console.log(response);
             }
         }).catch((e, res) => {
             console.log(e.response.status);
@@ -36,8 +34,8 @@ export class LoginPage extends React.Component {
     render() {
         return (
             <div>
-                <h1>Login</h1>
-                <form onSubmit={this.handleLoginSubmit}>
+                <h1>Forgot Password</h1>
+                <form onSubmit={this.handleForgotSubmit}>
                     <div>
                         <label htmlFor="email">Email</label>
                         <input type="email" id="email" name="email" ref="email" placeholder="email" required />
@@ -47,21 +45,14 @@ export class LoginPage extends React.Component {
                         <input type="password" id="password" name="password" ref="password" placeholder="password" minLength="6" required />
                     </div>
                     <div>
-                        <input type="submit" value="Login" />
+                        <label htmlFor="password_confirm">Confirm Password</label>
+                        <input type="password" id="password_confirm" name="password_confirm" ref="password_confirm" placeholder="confirm password" minLength="6" required />
                     </div>
+                    <input type="submit" value="Submit" />
                 </form>
-                <Link to="/forgotpassword">
-                    Forgot Password?
-                </Link>
             </div>
         );
     }
-};
+}
 
-const mapDispatchToProps = dispatch => {
-    return {
-        login: data => dispatch(login(data))
-    };
-};
-
-export default connect(null, mapDispatchToProps)(LoginPage);
+export default ResetPasswordPage;
