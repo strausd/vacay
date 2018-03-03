@@ -4,6 +4,11 @@ import axios from 'axios';
 
 export class ResetPasswordPage extends React.Component {
 
+    constructor(props) {
+        super(props);
+        console.log('IN RESET');
+    }
+
     handleForgotSubmit = (e) => {
         e.preventDefault();
         // If passwords dont match, return an error
@@ -29,7 +34,7 @@ export class ResetPasswordPage extends React.Component {
             console.log(e.response.status);
             console.log(e.response.data.error.message);
         });
-    }
+    };
 
     render() {
         return (

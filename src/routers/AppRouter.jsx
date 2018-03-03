@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import PrivateRoute from './PrivateRoute';
 import Header from '../components/Header';
@@ -13,22 +13,24 @@ import ResetPasswordPage from '../components/pages/ResetPasswordPage';
 import DashboardPage from '../components/pages/DashboardPage';
 
 
-const AppRouter = (props) => {
+const AppRouter = () => {
     return (
         <Router>
             <div>
                 <Header />
 
-                <Route exact path="/" component={HomePage} />
-                <Route path="/pricing" component={PricingPage} />
-                <Route path="/contact" component={ContactPage} />
-                <Route path="/signup" component={SignupPage} />
-                <Route path="/login" component={LoginPage} />
+                <Switch>
+                    <Route exact path="/" component={HomePage} />
+                    <Route path="/pricing" component={PricingPage} />
+                    <Route path="/contact" component={ContactPage} />
+                    <Route path="/signup" component={SignupPage} />
+                    <Route path="/login" component={LoginPage} />
                 
-                <Route exact path="/forgotpassword" component={ForgotPasswordPage} />
-                <Route path="/resetpassword/:id" component={ResetPasswordPage} />
-                
-                <PrivateRoute path="/dashboard" component={DashboardPage} />
+                    <Route path="/forgotpassword" component={ForgotPasswordPage} />
+                    <Route path="/resetpassword/:uuid" component={ResetPasswordPage} />
+
+                    <PrivateRoute path="/dashboard" component={DashboardPage} />
+                </Switch>
             </div>
         </Router>
     );
