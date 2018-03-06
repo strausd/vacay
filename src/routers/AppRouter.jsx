@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import PrivateRoute from './PrivateRoute';
 import Header from '../components/Header';
@@ -27,6 +27,7 @@ const AppRouter = () => {
                     <Route path="/login" component={LoginPage} />
                 
                     <Route path="/forgotpassword" component={ForgotPasswordPage} />
+                    <Route exact path="/resetpassword" component={() => <Redirect to="/forgotpassword" />} />
                     <Route path="/resetpassword/:uuid" component={ResetPasswordPage} />
 
                     <PrivateRoute path="/dashboard" component={DashboardPage} />
