@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 import Header from '../components/Header';
 import HomePage from '../components/pages/HomePage';
 import PricingPage from '../components/pages/PricingPage';
@@ -23,8 +24,8 @@ const AppRouter = () => {
                     <Route exact path="/" component={HomePage} />
                     <Route path="/pricing" component={PricingPage} />
                     <Route path="/contact" component={ContactPage} />
-                    <Route path="/signup" component={SignupPage} />
-                    <Route path="/login" component={LoginPage} />
+                    <PublicRoute path="/signup" component={SignupPage} />
+                    <PublicRoute path="/login" component={LoginPage} />
                 
                     <Route path="/forgotpassword" component={ForgotPasswordPage} />
                     <Route exact path="/resetpassword" component={() => <Redirect to="/forgotpassword" />} />

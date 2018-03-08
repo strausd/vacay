@@ -22,12 +22,16 @@ export const logout = () => {
 export const loadLocalJWT = () => {
     const jwt = localStorage.getItem('jwt');
     const user = JSON.parse(localStorage.getItem('user'));
-    return login({ jwt, user });
+    if (jwt) {
+        return login({ jwt, user });
+    } else {
+        return logout();
+    }
 };
 
 export const verifyLocalJWT = () => {
     const jwt = localStorage.getItem('jwt');
-    if (jwt === null) {
+    if (jwt !== null) {
         return dispatch => {
             axios({
                 method: 'get',

@@ -6,15 +6,11 @@ import { Route, Redirect, withRouter } from 'react-router-dom';
 export const PrivateRoute = ({ isAuthenticated, component: Component, ...rest }) => {
     return (
         <Route {...rest} component={(props) => {
-            return (
-                isAuthenticated ? (
-                    <div>
-                        <Component {...props} />
-                    </div>
-                ) : (
-                        <Redirect to="/login" />
-                    )
-            );
+            if (isAuthenticated) {
+                return <Component {...props} />;
+            } else {
+                return <Redirect to="/login" />;
+            }
         }} />
     );
 };
