@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
-import Header from '../components/Header';
+import Header from '../components/atoms/Header';
 import HomePage from '../components/pages/HomePage';
 import PricingPage from '../components/pages/PricingPage';
 import ContactPage from '../components/pages/ContactPage';

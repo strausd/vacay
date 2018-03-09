@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { loadLocalJWT, verifyLocalJWT } from '../actions/authActions';
+import { loadLocalJWT, verifyLocalJWT } from '../../actions/authActions';
+import Logout from './Logout';
 
 
 class UserMenu extends React.Component {
@@ -16,6 +17,7 @@ class UserMenu extends React.Component {
             return (
                 <div>
                     Logged in - {this.props.user.first_name}
+                    <Logout />
                 </div>
             );
         } else {
