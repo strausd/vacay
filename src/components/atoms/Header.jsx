@@ -9,16 +9,18 @@ class Header extends React.Component {
 
     render() {
         return (
-            <div>
-                <ul>
-                    <li><NavLink exact to="/" activeClassName="active">Home</NavLink></li>
-                    <li><NavLink exact to="/pricing" activeClassName="active">Pricing</NavLink></li>
-                    <li><NavLink exact to="/contact" activeClassName="active">Contact</NavLink></li>
-                    {this.props.isAuthenticated ? null : <li><NavLink exact to="/signup" activeClassName="active">Signup</NavLink></li>}
-                    {this.props.isAuthenticated ? null : <li><NavLink exact to="/login" activeClassName="active">Login</NavLink></li>}
-                    {!this.props.isAuthenticated ? null : <li><NavLink exact to="/dashboard" activeClassName="active">Dashboard</NavLink></li>}
-                </ul>
-                <UserMenu />
+            <div className="container">
+                <div className="header">
+                    <ul>
+                        <li><NavLink exact to="/" activeClassName="active">Home</NavLink></li>
+                        <li><NavLink exact to="/pricing" activeClassName="active">Pricing</NavLink></li>
+                        <li><NavLink exact to="/contact" activeClassName="active">Contact</NavLink></li>
+                        {this.props.isAuthenticated ? null : <li><NavLink exact to="/signup" activeClassName="active">Signup</NavLink></li>}
+                        {this.props.isAuthenticated ? null : <li><NavLink exact to="/login" activeClassName="active">Login</NavLink></li>}
+                        {!this.props.isAuthenticated ? null : <li><NavLink exact to="/dashboard" activeClassName="active">Dashboard</NavLink></li>}
+                    </ul>
+                    <UserMenu />
+                </div>
             </div>
         );
     }
