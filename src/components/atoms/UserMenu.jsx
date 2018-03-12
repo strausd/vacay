@@ -16,7 +16,7 @@ class UserMenu extends React.Component {
         if (this.props.user) {
             return (
                 <div>
-                    Logged in - {this.props.user.first_name}
+                    Hi, {this.props.user.first_name}
                     <Logout />
                 </div>
             );
