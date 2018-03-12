@@ -35,8 +35,8 @@ export class LoginPage extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>Login</h1>
+            <div className="container page-content">
+                <h1><i className="icon ion-home"></i>Login</h1>
                 <form onSubmit={this.handleLoginSubmit}>
                     <div>
                         <label htmlFor="email">Email</label>

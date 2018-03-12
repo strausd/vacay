@@ -10,7 +10,7 @@ export class LoginPage extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="container page-content">
                 <h1>Logout</h1>
                 <button onClick={this.handleLogout}>Logout</button>
             </div>

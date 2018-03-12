@@ -40,7 +40,7 @@ export class SignupPage extends React.Component {
 
     render = () => {
         return (
-            <div>
+            <div className="container page-content">
                 <h1>Signup</h1>
                 <form onSubmit={this.handleSignupSubmit}>
                     <p className="hidden" ref="error_container"></p>

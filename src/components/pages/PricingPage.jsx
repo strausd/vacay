@@ -4,7 +4,7 @@ import React from 'react';
 export class PricingPage extends React.Component {
     render() {
         return (
-            <div>
+            <div className="container page-content">
                 <h1>Pricing</h1>
             </div>
         );

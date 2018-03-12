@@ -20,10 +20,10 @@ class Header extends React.Component {
                             {this.props.isAuthenticated ? null : <li><NavLink exact to="/login" activeClassName="active">Login</NavLink></li>}
                             {!this.props.isAuthenticated ? null : <li><NavLink exact to="/dashboard" activeClassName="active">Dashboard</NavLink></li>}
                         </ul>
+                        <UserMenu />
                     </div>
                     <div className="header__transition"></div>
                 </div>
-                <UserMenu />
             </div>
         );
     }

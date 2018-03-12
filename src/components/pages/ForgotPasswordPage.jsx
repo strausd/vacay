@@ -27,7 +27,7 @@ export class ForgotPasswordPage extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="container page-content">
                 <h1>Forgot Password</h1>
                 <form onSubmit={this.handleForgotSubmit}>
                     <div>
