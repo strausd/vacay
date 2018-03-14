@@ -22,7 +22,6 @@ class Header extends React.Component {
                         </ul>
                         <UserMenu />
                     </div>
-                    <div className="header__transition"></div>
                 </div>
             </div>
         );
