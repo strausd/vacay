@@ -12,6 +12,8 @@ import LoginPage from '../components/pages/LoginPage';
 import ForgotPasswordPage from '../components/pages/ForgotPasswordPage';
 import ResetPasswordPage from '../components/pages/ResetPasswordPage';
 import DashboardPage from '../components/pages/DashboardPage';
+import RequestsPage from '../components/pages/RequestsPage';
+import CalendarPage from '../components/pages/CalendarPage';
 
 
 const AppRouter = () => {
@@ -31,7 +33,10 @@ const AppRouter = () => {
                     <Route exact path="/resetpassword" component={() => <Redirect to="/forgotpassword" />} />
                     <Route path="/resetpassword/:uuid" component={ResetPasswordPage} />
 
-                    <PrivateRoute path="/dashboard" component={DashboardPage} />
+                    <Redirect exact from="/:org_id" to="/:org_id/dashboard" />
+                    <PrivateRoute path="/:org_id/dashboard" component={DashboardPage} />
+                    <PrivateRoute path="/:org_id/requests" component={RequestsPage} />
+                    <PrivateRoute path="/:org_id/calendar" component={CalendarPage} />
                 </Switch>
             </div>
         </Router>
