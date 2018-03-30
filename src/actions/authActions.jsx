@@ -39,8 +39,8 @@ export const verifyLocalJWT = () => {
                 headers: { Authorization: jwt }
             }).then(response => {
                 if (response.data.hasOwnProperty('error')) {
-                    console.log(response.data.error);
                     dispatch(logout());
+                    console.log(response.data.error);
                 } else {
                     dispatch(login({
                         jwt,
@@ -48,9 +48,9 @@ export const verifyLocalJWT = () => {
                     }));
                 }
             }).catch((e, res) => {
+                dispatch(logout());
                 console.log(e.response.status);
                 console.log(e.response.data.error.message);
-                dispatch(logout());
             });
         };
     } else {

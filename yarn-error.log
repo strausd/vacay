@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\strausd\.yarn\bin\yarn.js add ionicons
+  C:\Program Files\nodejs\node.exe C:\Users\strausd\.yarn\bin\yarn.js run start-watch
 
 PATH: 
   C:\Users\strausd\.yarn\bin;C:\Users\strausd\.config\yarn\global\node_modules\.bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\strausd\bin;C:\Program Files\Docker\Docker\Resources\bin;C:\Program Files (x86)\Python\Python3.6.1\Scripts;C:\Program Files (x86)\Python\Python3.6.1;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client;C:\Program Files\Intel\iCLS Client;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Users\strausd\AppData\Local\Microsoft\WindowsApps;C:\Users\strausd\AppData\Local\atom\bin;C:\Program Files\Heroku\bin;C:\Program Files\Microsoft VS Code\bin;C:\Users\strausd\AppData\Roaming\npm;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps
@@ -51,6 +51,8 @@ npm manifest:
   		"express": "^4.16.2",
   		"express-session": "^1.15.6",
   		"extract-text-webpack-plugin": "^3.0.2",
+  		"file-loader": "^1.1.11",
+  		"ionicons": "^3.0.0",
   		"jsonwebtoken": "^8.1.1",
   		"mongodb": "^3.0.2",
   		"mongoose": "^5.0.3",
@@ -156,6 +158,10 @@ Lockfile:
     version "2.1.1"
     resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-2.1.1.tgz#617997fc5f60576894c435f940d819e135b80762"
   
+  ajv-keywords@^3.1.0:
+    version "3.1.0"
+    resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-3.1.0.tgz#ac2b27939c543e95d2c06e7f7f5c27be4aa543be"
+  
   ajv@^4.9.1:
     version "4.11.8"
     resolved "https://registry.yarnpkg.com/ajv/-/ajv-4.11.8.tgz#82ffb02b29e662ae53bdc20af15947706739c536"
@@ -168,6 +174,14 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/ajv/-/ajv-5.5.2.tgz#73b5eeca3fab653e3d3f9422b341ad42205dc965"
     dependencies:
       co "^4.6.0"
+      fast-deep-equal "^1.0.0"
+      fast-json-stable-stringify "^2.0.0"
+      json-schema-traverse "^0.3.0"
+  
+  ajv@^6.1.0:
+    version "6.2.1"
+    resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.2.1.tgz#28a6abc493a2abe0fb4c8507acaedb43fa550671"
+    dependencies:
       fast-deep-equal "^1.0.0"
       fast-json-stable-stringify "^2.0.0"
       json-schema-traverse "^0.3.0"
@@ -2687,6 +2701,13 @@ Lockfile:
       setimmediate "^1.0.5"
       ua-parser-js "^0.7.9"
   
+  file-loader@^1.1.11:
+    version "1.1.11"
+    resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-1.1.11.tgz#6fe886449b0f2a936e43cabaac0cdbfb369506f8"
+    dependencies:
+      loader-utils "^1.0.2"
+      schema-utils "^0.4.5"
+  
   filename-regex@^2.0.0:
     version "2.0.1"
     resolved "https://registry.yarnpkg.com/filename-regex/-/filename-regex-2.0.1.tgz#c1c4b9bee3e09725ddb106b75c1e301fe2f18b26"
@@ -3400,6 +3421,10 @@ Lockfile:
   invert-kv@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
+  
+  ionicons@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/ionicons/-/ionicons-3.0.0.tgz#40b8daf4fd7a31150bd002160f66496e22a98c3c"
   
   ip@^1.1.0, ip@^1.1.5:
     version "1.1.5"
@@ -6406,6 +6431,13 @@ Lockfile:
       ajv "^5.0.0"
       ajv-keywords "^2.1.0"
   
+  schema-utils@^0.4.5:
+    version "0.4.5"
+    resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-0.4.5.tgz#21836f0608aac17b78f9e3e24daff14a5ca13a3e"
+    dependencies:
+      ajv "^6.1.0"
+      ajv-keywords "^3.1.0"
+  
   scss-tokenizer@^0.2.3:
     version "0.2.3"
     resolved "https://registry.yarnpkg.com/scss-tokenizer/-/scss-tokenizer-0.2.3.tgz#8eb06db9a9723333824d3f5530641149847ce5d1"
@@ -7713,4 +7745,17 @@ Lockfile:
       window-size "0.1.0"
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\strausd\Dropbox\Stuff\udemy\personal\vacay\node_modules\caniuse-api\node_modules\.bin'
+  Error: Command failed.
+  Exit code: 1073807364
+  Command: C:\WINDOWS\system32\cmd.exe
+  Arguments: /d /s /c nodemon server/server.js
+  Directory: C:\Users\strausd\Dropbox\Stuff\udemy\personal\vacay
+  Output:
+  
+      at ProcessTermError.MessageError (C:\Users\strausd\.yarn\lib\cli.js:186:110)
+      at new ProcessTermError (C:\Users\strausd\.yarn\lib\cli.js:226:113)
+      at ChildProcess.<anonymous> (C:\Users\strausd\.yarn\lib\cli.js:30281:17)
+      at emitTwo (events.js:125:13)
+      at ChildProcess.emit (events.js:213:7)
+      at maybeClose (internal/child_process.js:927:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
