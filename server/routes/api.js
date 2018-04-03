@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const UserModel = require('../../db/schemas/user');
+const UserModel = require('../../db/schemas/user').UserModel;
 
 
 const appRouter = (app) => {

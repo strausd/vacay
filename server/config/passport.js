@@ -1,7 +1,7 @@
 const passport = require('passport');
 const jwt = require('passport-jwt');
 const localStrategy = require('passport-local');
-const UserModel = require('../../db/schemas/user');
+const UserModel = require('../../db/schemas/user').UserModel;
 
 const jwtStrategy = jwt.Strategy;
 const extractJwt = jwt.ExtractJwt;

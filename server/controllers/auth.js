@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const UserModel = require('../../db/schemas/user');
+const UserModel = require('../../db/schemas/user').UserModel;
 const sendEmail = require('../config/nodemailer');
 
 

@@ -3,7 +3,6 @@ const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcrypt');
 const uuidv4 = require('uuid/v4');
 const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
 
 
 const userNotFoundError = () => {
@@ -11,7 +10,6 @@ const userNotFoundError = () => {
     err.status = 401;
     return err;
 };
-
 
 const incorrectComboError = () => {
     const err = new Error('Incorrect email/password combination.');
@@ -141,4 +139,7 @@ UserSchema.statics.reset_password = function (email, new_password, token, callba
 
 const User = mongoose.model('User', UserSchema);
 
-module.exports = User;
+module.exports = {
+    UserModel: User,
+    UserSchema: UserSchema
+};
