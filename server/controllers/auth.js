@@ -155,7 +155,7 @@ exports.register = function (req, res, next) {
         last_name
     };
     const newUserPromise = UserModel.create(userData);
-    newUserPromise.then((newUser) => {
+    newUserPromise.then(newUser => {
         const userInfo = setUserInfo(newUser);
         return res.status(201).send({
             token: 'JWT ' + generateToken(userInfo),

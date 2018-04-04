@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
+const slugify = require('slugify');
+
 const Schema = mongoose.Schema;
+const UserSchema = require('./user').UserSchema;
+
 
 const OrganizationSchema = new Schema({
     name: {
@@ -17,7 +21,7 @@ const OrganizationSchema = new Schema({
         unique: true,
         uniqueCaseInsensitive: true
     },
-    maintainers: [],
+    maintainers: [UserSchema],
     joined_date: {
         type: Date,
         default: Date.now
@@ -28,6 +32,16 @@ OrganizationSchema.plugin(uniqueValidator, {
     message: 'Error: the {PATH} {VALUE} is already in use.'
 });
 
-const Organization = mongoose.model('Organization', OrganizationSchema);
+OrganizationSchema.pre('validate', function (next) {
+    if (!this.slug) {
+        this.slug = slugify(this.name, { lower: true });
+    }
+    next();
+});
 
-module.exports = Organization;
+const OrganizationModel = mongoose.model('Organization', OrganizationSchema);
+
+module.exports = {
+    OrganizationModel: OrganizationModel,
+    OrganizationSchema: OrganizationSchema
+};

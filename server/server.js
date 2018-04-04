@@ -22,8 +22,6 @@ const MongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
 const router = require('./routes/router')
 
-const api_routes = require('./routes/api');
-
 const publicPath = path.join(__dirname, '..', 'public');
 const port = process.env.PORT || 3000;
 

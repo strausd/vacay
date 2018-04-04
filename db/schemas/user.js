@@ -137,9 +137,9 @@ UserSchema.statics.reset_password = function (email, new_password, token, callba
     }).catch(err => callback(err));
 };
 
-const User = mongoose.model('User', UserSchema);
+const UserModel = mongoose.model('User', UserSchema);
 
 module.exports = {
-    UserModel: User,
+    UserModel: UserModel,
     UserSchema: UserSchema
 };
