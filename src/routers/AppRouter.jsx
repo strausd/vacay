@@ -7,7 +7,7 @@ import Header from '../components/atoms/Header';
 import HomePage from '../components/pages/HomePage';
 import PricingPage from '../components/pages/PricingPage';
 import ContactPage from '../components/pages/ContactPage';
-import SignupPage from '../components/pages/SignupPage';
+import RegisterPage from '../components/pages/RegisterPage';
 import LoginPage from '../components/pages/LoginPage';
 import ForgotPasswordPage from '../components/pages/ForgotPasswordPage';
 import ResetPasswordPage from '../components/pages/ResetPasswordPage';
@@ -26,7 +26,7 @@ const AppRouter = () => {
                     <Route exact path="/" component={HomePage} />
                     <Route path="/pricing" component={PricingPage} />
                     <Route path="/contact" component={ContactPage} />
-                    <PublicRoute path="/signup" component={SignupPage} />
+                    <PublicRoute path="/register" component={RegisterPage} />
                     <PublicRoute path="/login" component={LoginPage} />
                 
                     <Route path="/forgotpassword" component={ForgotPasswordPage} />

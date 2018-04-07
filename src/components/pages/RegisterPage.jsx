@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 
-export class SignupPage extends React.Component {
+export class RegisterPage extends React.Component {
 
     handleSignupSubmit = (e) => {
         e.preventDefault();
@@ -74,4 +74,4 @@ export class SignupPage extends React.Component {
     }
 };
 
-export default SignupPage;
+export default RegisterPage;

@@ -25,6 +25,7 @@ module.exports = app => {
     authRoutes.post('/resetpassword', AuthController.resetPassword);
 
     organizationRoutes.post('/create', OrganizationController.createOrganization);
+    organizationRoutes.post('/:user_id/:org_id', OrganizationController.testConnection);
 
     app.use('/api', apiRoutes);
 };

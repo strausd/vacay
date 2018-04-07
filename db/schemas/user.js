@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcrypt');
 const uuidv4 = require('uuid/v4');
+
+const OrganizationSchema = require('./organization').OrganizationSchema;
 const Schema = mongoose.Schema;
 
 
@@ -48,7 +50,11 @@ const UserSchema = new Schema({
         }
     },
     forgot_password_token: String,
-    forgot_password_expires: Date
+    forgot_password_expires: Date,
+    organization: {
+        type: Schema.Types.ObjectId,
+        ref: 'Organization'
+    }
 });
 
 UserSchema.plugin(uniqueValidator, {
