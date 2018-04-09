@@ -1,0 +1,32 @@
+.center-form {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-group {
+    display: block;
+
+    label {
+        display: block;
+    }
+
+    input {
+        border: none;
+        border-bottom: 2px solid white;
+        height: 2em;
+        width: 100%;
+        margin-top: .3em;
+        margin-bottom: 1em;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        transition: all .2s ease;
+        font-size: 1em;
+
+        &:active, &:focus {
+            border-bottom: 2px solid $dark;
+            outline: none;
+        }
+    }
+}
